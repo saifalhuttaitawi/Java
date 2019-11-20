@@ -1,0 +1,119 @@
+import java.util.Scanner;
+
+public class test {
+   public static void main(final String[] args) {
+      final Scanner reader = new Scanner(System.in);
+      int height, width, x, y, i = 0;
+      int j = 1;
+      String direction = "n";
+      System.out.print("\033[H\033[2J"); // Clear screen
+      System.out.println("Enter the size of the table (Number of columns): ");
+      height = reader.nextInt();
+      System.out.println("Enter the size of the table (Number of rows): ");
+      width = reader.nextInt();
+      System.out.println("Enter the start point (X coordinate): ");
+      x = reader.nextInt();
+      System.out.println("Enter the start point (Y coordinate): ");
+      y = reader.nextInt();
+      System.out.println("**** Enter Commands : ****");
+      System.out.println("0 = quit simulation and print results");
+      System.out.println("1 = move forward one step");
+      System.out.println("2 = move backwards one step");
+      System.out.println("3 = rotate clockwise 90 degrees (eg north to east)");
+      System.out.println("4 = rotate counterclockwise 90 degrees (eg west to south)");
+
+      do {
+         i = reader.nextInt();
+         if ((x < 0) || (x >= width) || (y < 0) || (y >= height)) {
+            j = 0;
+         }
+         switch (i) {
+         case 0:
+            zero(j, x, y, direction);
+            return;
+
+         case 1:
+            if (direction == "n") {
+               y -= 1;
+            }
+            if (direction == "w") {
+               x -= 1;
+            }
+            if (direction == "e") {
+               x += 1;
+            }
+            if (direction == "s") {
+               y += 1;
+            }
+            //System.out.println("x = " + x + "   y = " + y + "   D = " + direction);
+            break;
+
+         case 2:
+            if (direction == "n") {
+               y += 1;
+            }
+            if (direction == "w") {
+               x += 1;
+            }
+            if (direction == "e") {
+               x -= 1;
+            }
+            if (direction == "s") {
+               y -= 1;
+            }
+            //System.out.println("x = " + x + "   y = " + y + "   D = " + direction);
+            break;
+
+         case 3:
+            direction = three(direction);
+            //System.out.println("x = " + x + "   y = " + y + "   D = " + direction);
+            break;
+
+         case 4:
+            direction = four(direction);
+            //System.out.println("x = " + x + "   y = " + y + "   D = " + direction);
+            break;
+
+         default:
+            System.out.println("The number you entered ( " + i + " ) is not valid! , Please re Enter your command");
+         }
+      } while (i != 0);
+   }
+
+   private static void zero(int j, int x, int y, String direction) {
+      System.out.print("Results: ");
+      if (j == 0) {
+         System.out.println("Position [-1, -1]");
+      } else {
+         System.out.println("x = " + x + "   y = " + y + "   Direction = " + direction);
+      }
+   }
+
+   private static String three(String direction) {
+      if (direction == "n") {
+         direction = "e";
+      } else if (direction == "w") {
+         direction = "n";
+      } else if (direction == "e") {
+         direction = "s";
+      } else if (direction == "s") {
+         direction = "w";
+      }
+      //System.out.println("Direction = " + direction);
+      return direction;
+   }
+
+   private static String four(String direction) {
+      if (direction == "n") {
+         direction = "w";
+      } else if (direction == "w") {
+         direction = "s";
+      } else if (direction == "e") {
+         direction = "n";
+      } else if (direction == "s") {
+         direction = "e";
+      }
+      //System.out.println("Direction = " + direction);
+      return direction;
+   }
+}
